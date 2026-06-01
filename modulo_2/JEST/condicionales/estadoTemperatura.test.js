@@ -16,7 +16,5 @@ describe('estadoTemperatura', () => {
   test('Sad path: grados invalidos', () => {
     expect(() => estadoTemperatura(-1)).toThrow('Grados invalidos');
     expect(() => estadoTemperatura('7')).toThrow('Grados invalidos');
-    expect(() => estadoTemperatura(31)).toThrow('Grados invalidos');
-    })
+  })
 })
-

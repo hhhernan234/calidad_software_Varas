@@ -1,15 +1,13 @@
 function estadoTemperatura(grados) {
-    if(!Number.isInteger(grados) || grados >= 30 )
+    if(!Number.isInteger(grados) || grados < 0)
         throw new TypeError('Grados invalidos');
-    estado="Calor";
-    if(grados >= 15 && grados < 30)
-        estado="Templado";
-    else if(grados <15){
-        estado="Frio";
-    }
+    let estado;
+    if(grados >= 30)
+        estado = "Calor";
+    else if(grados >= 15)
+        estado = "Templado";
+    else
+        estado = "Frio";
     return estado;
 }
 module.exports = { estadoTemperatura };
-
-
-
