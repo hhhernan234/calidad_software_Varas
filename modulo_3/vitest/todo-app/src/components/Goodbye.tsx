@@ -1,8 +1,9 @@
+// src/components/Hello.tsx
 // Componente trivial usado únicamente para verificar la configuración.
-interface GoodbyeProps {
+interface HelloProps {
   name: string;
 }
 
-export function Goodbye({ name }: GoodbyeProps) {
-  return <p>Adiós, {name}</p>;
+export function GoodBye({ name }: HelloProps) {
+  return <p>Hola, {name}</p>;
 }

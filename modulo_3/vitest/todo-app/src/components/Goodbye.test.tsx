@@ -1,9 +1,10 @@
+// src/components/GoodBye.test.tsx
 import { describe, it, expect } from 'vitest';
-import { Goodbye } from './Goodbye';
+import { GoodBye } from './Goodbye';
 
-describe('Goodbye', () => {
+describe('GoodBye', () => {
   // El test mínimo: el componente existe y es importable.
   it('debería estar definido', () => {
-    expect(Goodbye).toBeDefined();
+    expect(GoodBye).toBeDefined();
   });
 });
