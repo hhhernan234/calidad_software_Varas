@@ -1,4 +1,5 @@
 // src/api/categories.api.test.ts
+console.log('--- importing src/api/categories.api.test.ts ---')
 import { http, HttpResponse } from 'msw'
 import { server } from '@/test/mocks/server'
 import { createCategory } from './categories.api'

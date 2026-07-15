@@ -1,4 +1,5 @@
 // src/api/auth.api.test.ts
+console.log('--- importing src/api/auth.api.test.ts ---')
 import { login } from './auth.api'
 
 describe('login()', () => {

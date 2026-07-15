@@ -1,4 +1,5 @@
 // src/api/posts.api.test.ts
+console.log('--- importing src/api/posts.api.test.ts ---')
 import { getPosts } from './posts.api'
 
 describe('getPosts()', () => {

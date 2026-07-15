@@ -1,6 +1,6 @@
 // src/components/public/PublicHeader.test.tsx
 import { screen } from '@testing-library/react'
-import { renderWithRouter } from '@/test/render'
+import { renderWithRouter } from '@/test/mocks/render'
 import { useAuthStore } from '@/store/auth.store'
 import PublicHeader from './PublicHeader'
 

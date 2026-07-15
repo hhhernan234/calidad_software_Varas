@@ -1,6 +1,7 @@
+// src/test/setup.ts
 import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
-import { server } from './mocks/server'
+import { server } from '../mocks/server'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => {

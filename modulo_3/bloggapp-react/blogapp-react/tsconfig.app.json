@@ -8,6 +8,7 @@
     "types": ["vite/client", "vitest/globals"],
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -16,9 +17,6 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
-    /* Alias @ */
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },

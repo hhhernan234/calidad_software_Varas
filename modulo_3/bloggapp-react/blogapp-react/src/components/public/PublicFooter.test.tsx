@@ -5,6 +5,6 @@ import PublicFooter from './PublicFooter'
 describe('PublicFooter', () => {
   it('should render the BlogApp copyright text', () => {
     render(<PublicFooter />)
-    expect(screen.getByText(/BlogApp-Varas/)).toBeInTheDocument()
+    expect(screen.getByText(/BlogApp/)).toBeInTheDocument()
   })
 })

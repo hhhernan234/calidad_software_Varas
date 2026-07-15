@@ -1,4 +1,5 @@
 // src/lib/avatar-color.test.ts
+console.log('--- importing src/lib/avatar-color.test.ts ---')
 import { avatarColor } from './avatar-color'
 
 const PALETTE = [

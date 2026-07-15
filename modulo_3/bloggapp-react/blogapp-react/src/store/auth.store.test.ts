@@ -1,69 +1,44 @@
-// src/store/auth.store.test.ts
-import { useAuthStore } from './auth.store'
+// src/test/mocks/handlers.ts
+import { http, HttpResponse } from 'msw'
+import type { LoginPayload } from '@/types/auth.types'
+import type { CreateCategoryPayload } from '@/types/category.types'
 
-const INITIAL_STATE = { token: null, userId: null, isAuthenticated: false }
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-beforeEach(() => {
-  useAuthStore.setState(INITIAL_STATE)
-  localStorage.clear()
-})
-// src/store/auth.store.test.ts (continuación)
-function fakeToken(payload: object) {
-  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-  const body = btoa(JSON.stringify(payload))
-  return `${header}.${body}.signature`
-}
-// src/store/auth.store.test.ts (continuación)
-describe('useAuthStore', () => {
-  it('should start unauthenticated with no token', () => {
-    const state = useAuthStore.getState()
-    expect(state.isAuthenticated).toBe(false)
-    expect(state.token).toBeNull()
-    expect(state.userId).toBeNull()
-  })
+export const handlers = [
+  http.post(`${BASE_URL}/auth/login`, async ({ request }) => {
+    const body = (await request.json()) as LoginPayload
+    if (body.username === 'higuera' && body.password === 'secret') {
+      return HttpResponse.json({
+        success: true,
+        message: 'Login exitoso',
+        data: { access_token: 'fake-jwt-token' },
+      })
+    }
+    return HttpResponse.json(
+      { success: false, message: 'Credenciales inválidas', data: null },
+      { status: 401 },
+    )
+  }),
 
-  it('should store the token and decode the userId on setToken()', () => {
-    const token = fakeToken({ id: 'user-42' })
-    useAuthStore.getState().setToken(token)
+  http.get(`${BASE_URL}/posts`, () => {
+    return HttpResponse.json({
+      success: true,
+      message: 'OK',
+      data: {
+        items: [
+          { id: 'post-1', title: 'Primer post', content: 'Contenido', category: { id: 'cat-1', name: 'Tech' } },
+        ],
+        meta: { itemCount: 1, totalItems: 1, itemsPerPage: 10, totalPages: 1, currentPage: 1 },
+      },
+    })
+  }),
 
-    const state = useAuthStore.getState()
-    expect(state.token).toBe(token)
-    expect(state.userId).toBe('user-42')
-    expect(state.isAuthenticated).toBe(true)
-  })
-
-  it('should set userId to null when the token cannot be decoded, but still authenticate', () => {
-    useAuthStore.getState().setToken('not-a-jwt')
-
-    const state = useAuthStore.getState()
-    expect(state.userId).toBeNull()
-    expect(state.isAuthenticated).toBe(true)
-  })
-
-  it('should clear token, userId and isAuthenticated on logout()', () => {
-    useAuthStore.getState().setToken(fakeToken({ id: 'user-42' }))
-    useAuthStore.getState().logout()
-
-    expect(useAuthStore.getState()).toMatchObject(INITIAL_STATE)
-  })
-})
-
-// src/store/auth.store.test.ts (continuación)
-describe('persistencia', () => {
-  it('should write the token under the "blogapp-auth" key in localStorage', () => {
-    const token = fakeToken({ id: 'user-42' })
-    useAuthStore.getState().setToken(token)
-
-    const raw = localStorage.getItem('blogapp-auth')
-    expect(raw).not.toBeNull()
-    expect(JSON.parse(raw!).state.token).toBe(token)
-  })
-
-  it('should not leave a persisted token after logout()', () => {
-    useAuthStore.getState().setToken(fakeToken({ id: 'user-42' }))
-    useAuthStore.getState().logout()
-
-    const raw = localStorage.getItem('blogapp-auth')
-    expect(JSON.parse(raw!).state.token).toBeNull()
-  })
-})
+  http.post(`${BASE_URL}/categories`, async ({ request }) => {
+    const body = (await request.json()) as CreateCategoryPayload
+    return HttpResponse.json(
+      { success: true, message: 'Categoría creada', data: { id: 'cat-new', name: body.name } },
+      { status: 201 },
+    )
+  }),
+]

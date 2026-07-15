@@ -1,4 +1,5 @@
 // src/lib/jwt.test.ts
+console.log('--- importing src/lib/jwt.test.ts ---')
 import { decodeToken } from './jwt'
 
 function fakeToken(payload: object) {
